@@ -1,0 +1,1392 @@
+/* ========================================
+   GLOBAL
+======================================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    width: 100%;
+    height: 100%;
+}
+
+body {
+    font-family: Georgia, "Times New Roman", serif;
+    background: #0f1712;
+    color: #fff;
+    overflow: hidden;
+}
+
+
+/* ========================================
+   APP
+======================================== */
+
+#app {
+    width: 100%;
+    height: 100%;
+}
+
+
+/* ========================================
+   SCENES
+======================================== */
+
+.scene {
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    position: relative;
+}
+
+
+/* ========================================
+   INTRO
+======================================== */
+
+#intro {
+    background:
+        radial-gradient(
+            circle at center,
+            #24aa41 0%,
+            #142118 45%,
+            #0f1712 100%
+        );
+}
+
+.intro-content {
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 20px;
+
+    text-align: center;
+}
+
+.intro-content h1 {
+    font-size: clamp(2rem, 5vw, 4rem);
+    font-weight: 400;
+    letter-spacing: 0.05em;
+}
+
+/* ========================================
+   INTRO TEXT TRANSITION
+======================================== */
+
+#intro-title,
+.intro-hint {
+    transition:
+        opacity 0.8s ease,
+        transform 0.8s ease;
+}
+
+
+/* ========================================
+   HIDE INTRO TEXT
+======================================== */
+
+#intro-title.is-hidden,
+.intro-hint.is-hidden {
+    opacity: 0;
+
+    transform: translateY(-15px);
+
+    pointer-events: none;
+}
+
+
+/* ========================================
+   FLOWER BUTTON
+======================================== */
+
+.flower-button {
+    border: none;
+    background: transparent;
+
+    font-size: 6rem;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.3s ease,
+        filter 0.3s ease;
+}
+
+.flower-button:hover {
+    transform: scale(1.12);
+    filter: brightness(1.15);
+}
+
+.flower-button:active {
+    transform: scale(0.95);
+}
+
+/* ========================================
+   FLOWER CONTAINER
+======================================== */
+
+.flower-container {
+    position: relative;
+
+    width: 140px;
+    height: 140px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+/* ========================================
+   SEED
+======================================== */
+
+.seed {
+    position: absolute;
+
+    left: 50%;
+    bottom: 5px;
+
+    transform: translateX(-50%) scale(0);
+
+    font-size: 3rem;
+
+    color: #5a3b22;
+
+    opacity: 0;
+
+    pointer-events: none;
+
+    transition:
+        transform 0.8s ease,
+        opacity 0.8s ease;
+}
+
+
+/* ========================================
+   FLOWER TRANSITION
+======================================== */
+
+.flower-button.is-growing {
+    animation: flowerToSeed 1.2s ease forwards;
+}
+
+.seed.is-visible {
+    transform: translateX(-50%) scale(1);
+    opacity: 1;
+}
+
+
+/* ========================================
+   FLOWER → SEED ANIMATION
+======================================== */
+
+@keyframes flowerToSeed {
+
+    0% {
+        transform: scale(1);
+        opacity: 1;
+    }
+
+    40% {
+        transform: scale(1.15);
+        opacity: 1;
+    }
+
+    100% {
+        transform: scale(0);
+        opacity: 0;
+    }
+}
+
+/* ========================================
+   TREE
+======================================== */
+
+.tree {
+    position: absolute;
+
+    left: 50%;
+    bottom: 10px;
+
+    width: 220px;
+    height: 320px;
+
+    transform: translateX(-50%);
+
+    pointer-events: none;
+
+    opacity: 0;
+
+    transition:
+        transform 2.5s ease-in-out;
+}
+
+
+/* ========================================
+   TRUNK
+======================================== */
+
+.trunk {
+    position: absolute;
+
+    left: 50%;
+    bottom: 0;
+
+    width: 20px;
+    height: 0;
+
+    transform: translateX(-50%);
+
+    background: #4a3020;
+
+    border-radius: 10px 10px 4px 4px;
+
+    transform-origin: bottom center;
+}
+
+
+/* ========================================
+   TREE GROWING
+======================================== */
+
+.tree.is-growing {
+    opacity: 1;
+}
+
+.tree.is-growing .trunk {
+    animation: growTrunk 3s ease-out forwards;
+}
+
+/* ========================================
+   CAMERA ZOOM OUT
+======================================== */
+
+.tree.is-zoomed {
+    transform:
+        translateX(-50%)
+        scale(0.7);
+}
+
+/* ========================================
+   TRUNK ANIMATION
+======================================== */
+
+@keyframes growTrunk {
+
+    0% {
+        height: 0;
+    }
+
+    100% {
+        height: 270px;
+    }
+
+}
+
+/* ========================================
+   BRANCHES
+======================================== */
+
+.branches {
+    position: absolute;
+
+    inset: 0;
+
+    pointer-events: none;
+}
+
+
+/* ========================================
+   BASE BRANCH
+======================================== */
+
+.branch {
+    position: absolute;
+
+    height: 11px;
+
+    background: #4a3020;
+
+    border-radius: 10px;
+
+    transform-origin: left center;
+
+    transform: scaleX(0);
+
+    opacity: 0;
+}
+
+
+/* ========================================
+   BRANCH POSITIONS
+======================================== */
+
+.branch-1 {
+    --branch-angle: -145deg;
+
+    width: 105px;
+
+    left: 50%;
+    bottom: 205px;
+
+    transform:
+        translateX(-2px)
+        rotate(var(--branch-angle))
+        scaleX(0);
+}
+
+
+.branch-2 {
+    --branch-angle: -35deg;
+
+    width: 105px;
+
+    left: 50%;
+    bottom: 205px;
+
+    transform:
+        translateX(-2px)
+        rotate(var(--branch-angle))
+        scaleX(0);
+}
+
+
+.branch-3 {
+    --branch-angle: -160deg;
+
+    width: 115px;
+
+    left: 50%;
+    bottom: 150px;
+
+    transform:
+        translateX(-2px)
+        rotate(var(--branch-angle))
+        scaleX(0);
+}
+
+
+.branch-4 {
+    --branch-angle: -20deg;
+
+    width: 115px;
+
+    left: 50%;
+    bottom: 150px;
+
+    transform:
+        translateX(-2px)
+        rotate(var(--branch-angle))
+        scaleX(0);
+}
+
+
+.branch-5 {
+    --branch-angle: -165deg;
+
+    width: 90px;
+
+    left: 50%;
+    bottom: 105px;
+
+    transform:
+        translateX(-2px)
+        rotate(var(--branch-angle))
+        scaleX(0);
+}
+
+
+.branch-6 {
+    --branch-angle: -15deg;
+
+    width: 90px;
+
+    left: 50%;
+    bottom: 105px;
+
+    transform:
+        translateX(-2px)
+        rotate(var(--branch-angle))
+        scaleX(0);
+}
+
+
+/* ========================================
+   BRANCH GROWTH
+======================================== */
+
+.tree.is-growing .branch {
+    animation: growBranch 1.2s ease-out forwards;
+}
+
+
+/* ========================================
+   STAGGERED BRANCHES
+======================================== */
+
+.tree.is-growing .branch-1 {
+    animation-delay: 0.4s;
+}
+
+.tree.is-growing .branch-2 {
+    animation-delay: 0.9s;
+}
+
+.tree.is-growing .branch-3 {
+    animation-delay: 1.4s;
+}
+
+.tree.is-growing .branch-4 {
+    animation-delay: 1.9s;
+}
+
+.tree.is-growing .branch-5 {
+    animation-delay: 2.4s;
+}
+
+.tree.is-growing .branch-6 {
+    animation-delay: 2.9s;
+}
+
+
+/* ========================================
+   BRANCH ANIMATION
+======================================== */
+
+@keyframes growBranch {
+
+    0% {
+        opacity: 0;
+
+        transform:
+            translateX(-2px)
+            rotate(var(--branch-angle))
+            scaleX(0);
+    }
+
+    20% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 1;
+
+        transform:
+            translateX(-2px)
+            rotate(var(--branch-angle))
+            scaleX(1);
+    }
+
+}
+
+/* ========================================
+   SECONDARY BRANCHES
+======================================== */
+
+.twig {
+    position: absolute;
+
+    height: 7px;
+
+    background: #4a3020;
+
+    border-radius: 10px;
+
+    transform-origin: left center;
+
+    transform: scaleX(0);
+
+    opacity: 0;
+}
+
+
+/* ========================================
+   TWIG POSITIONS
+======================================== */
+
+.twig-1 {
+    --twig-angle: -55deg;
+
+    width: 55px;
+
+    left: 50%;
+    bottom: 205px;
+}
+
+.twig-2 {
+    --twig-angle: 55deg;
+
+    width: 50px;
+
+    left: 50%;
+    bottom: 170px;
+}
+
+.twig-3 {
+    --twig-angle: -60deg;
+
+    width: 60px;
+
+    left: 50%;
+    bottom: 135px;
+}
+
+.twig-4 {
+    --twig-angle: 55deg;
+
+    width: 55px;
+
+    left: 50%;
+    bottom: 100px;
+}
+
+.twig-5 {
+    --twig-angle: 60deg;
+
+    width: 50px;
+
+    left: 50%;
+    bottom: 235px;
+}
+
+.twig-6 {
+    --twig-angle: -55deg;
+
+    width: 45px;
+
+    left: 50%;
+    bottom: 265px;
+}
+
+.twig-7 {
+    --twig-angle: -45deg;
+
+    width: 45px;
+
+    left: 50%;
+    bottom: 155px;
+}
+
+.twig-8 {
+    --twig-angle: 45deg;
+
+    width: 45px;
+
+    left: 50%;
+    bottom: 120px;
+}
+
+
+/* ========================================
+   TWIG INITIAL TRANSFORM
+======================================== */
+
+.twig-1,
+.twig-2,
+.twig-3,
+.twig-4,
+.twig-5,
+.twig-6,
+.twig-7,
+.twig-8 {
+
+    transform:
+        rotate(var(--twig-angle))
+        scaleX(0);
+}
+
+
+/* ========================================
+   TWIG GROWTH
+======================================== */
+
+.tree.is-growing .twig {
+    animation: growTwig 0.9s ease-out forwards;
+}
+
+
+/* ========================================
+   STAGGERED TWIGS
+======================================== */
+
+.tree.is-growing .twig-1 {
+    animation-delay: 1.2s;
+}
+
+.tree.is-growing .twig-2 {
+    animation-delay: 1.5s;
+}
+
+.tree.is-growing .twig-3 {
+    animation-delay: 1.8s;
+}
+
+.tree.is-growing .twig-4 {
+    animation-delay: 2.1s;
+}
+
+.tree.is-growing .twig-5 {
+    animation-delay: 2.4s;
+}
+
+.tree.is-growing .twig-6 {
+    animation-delay: 2.7s;
+}
+
+.tree.is-growing .twig-7 {
+    animation-delay: 3s;
+}
+
+.tree.is-growing .twig-8 {
+    animation-delay: 3.3s;
+}
+
+
+/* ========================================
+   TWIG ANIMATION
+======================================== */
+
+@keyframes growTwig {
+
+    0% {
+        opacity: 0;
+
+        transform:
+            rotate(var(--twig-angle))
+            scaleX(0);
+    }
+
+    20% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 1;
+
+        transform:
+            rotate(var(--twig-angle))
+            scaleX(1);
+    }
+
+}
+
+/* ========================================
+   FLOWERS
+======================================== */
+
+.flowers {
+    position: absolute;
+
+    inset: 0;
+
+transform: translateX(-20px);
+
+    pointer-events: none;
+}
+
+
+/* ========================================
+   FLOWER BASE
+======================================== */
+
+.flower {
+    position: absolute;
+
+    width: 50px;
+    height: 50px;
+
+    transform: scale(0);
+
+    opacity: 0;
+
+    filter: drop-shadow(
+        0 2px 3px rgba(0, 0, 0, 0.25)
+    );
+}
+
+/* ========================================
+   PETALS
+======================================== */
+
+.petal {
+    position: absolute;
+
+    width: 23px;
+    height: 34px;
+
+    background: #f4c542;
+
+    border-radius: 50%;
+
+    left: 50%;
+    top: 50%;
+
+    transform-origin: center bottom;
+}
+
+
+/* ========================================
+   PETAL POSITIONS
+======================================== */
+
+.petal-1 {
+    transform:
+        translate(-50%, -100%)
+        rotate(0deg);
+}
+
+.petal-2 {
+    transform:
+        translate(-50%, -100%)
+        rotate(90deg);
+}
+
+.petal-3 {
+    transform:
+        translate(-50%, -100%)
+        rotate(180deg);
+}
+
+.petal-4 {
+    transform:
+        translate(-50%, -100%)
+        rotate(270deg);
+}
+
+
+/* ========================================
+   FLOWER CENTER
+======================================== */
+
+.flower-center {
+    position: absolute;
+
+    width: 14px;
+    height: 14px;
+
+    left: 50%;
+    top: 50%;
+
+    transform: translate(-50%, -50%);
+
+    background: #d98b18;
+
+    border-radius: 50%;
+
+    z-index: 2;
+}
+
+
+/* ========================================
+   FLOWER POSITIONS — HEART
+======================================== */
+
+/* ========================================
+   TOP — TWO HEART LOBES
+======================================== */
+
+.flower-1 {
+    left: 20%;
+    bottom: 245px;
+}
+
+.flower-2 {
+    left: 30%;
+    bottom: 265px;
+}
+
+.flower-3 {
+    left: 40%;
+    bottom: 245px;
+}
+
+.flower-4 {
+    left: 60%;
+    bottom: 245px;
+}
+
+.flower-5 {
+    left: 70%;
+    bottom: 265px;
+}
+
+.flower-6 {
+    left: 80%;
+    bottom: 245px;
+}
+
+
+/* ========================================
+   UPPER SIDES
+======================================== */
+
+.flower-7 {
+    left: 14%;
+    bottom: 220px;
+}
+
+.flower-8 {
+    left: 26%;
+    bottom: 225px;
+}
+
+.flower-9 {
+    left: 37%;
+    bottom: 220px;
+}
+
+.flower-10 {
+    left: 63%;
+    bottom: 220px;
+}
+
+.flower-11 {
+    left: 74%;
+    bottom: 225px;
+}
+
+.flower-12 {
+    left: 86%;
+    bottom: 220px;
+}
+
+
+/* ========================================
+   MIDDLE — WIDEST PART
+======================================== */
+
+.flower-13 {
+    left: 10%;
+    bottom: 195px;
+}
+
+.flower-14 {
+    left: 22%;
+    bottom: 195px;
+}
+
+.flower-15 {
+    left: 34%;
+    bottom: 190px;
+}
+
+.flower-16 {
+    left: 50%;
+    bottom: 195px;
+}
+
+.flower-17 {
+    left: 66%;
+    bottom: 190px;
+}
+
+.flower-18 {
+    left: 78%;
+    bottom: 195px;
+}
+
+.flower-19 {
+    left: 90%;
+    bottom: 195px;
+}
+
+/* ========================================
+   LOWER — CLOSING THE HEART
+======================================== */
+
+.flower-20 {
+    left: 20%;
+    bottom: 170px;
+}
+
+.flower-21 {
+    left: 34%;
+    bottom: 155px;
+}
+
+.flower-22 {
+    left: 47%;
+    bottom: 140px;
+}
+
+.flower-23 {
+    left: 60%;
+    bottom: 155px;
+}
+
+.flower-24 {
+    left: 74%;
+    bottom: 170px;
+}
+
+
+/* ========================================
+   FIFTH ROW — LOWER
+======================================== */
+
+.flower-25 {
+    left: 25%;
+    bottom: 145px;
+}
+
+.flower-26 {
+    left: 37%;
+    bottom: 130px;
+}
+
+.flower-27 {
+    left: 53%;
+    bottom: 130px;
+}
+
+.flower-28 {
+    left: 65%;
+    bottom: 145px;
+}
+/* ========================================
+   FLOWER GROWTH
+======================================== */
+
+.tree.is-growing .flower {
+    animation: bloomFlower 0.8s ease-out forwards;
+}
+
+
+/* ========================================
+   FLOWER STAGGER
+======================================== */
+
+.tree.is-growing .flower-1 {
+    animation-delay: 3.8s;
+}
+
+.tree.is-growing .flower-2 {
+    animation-delay: 4s;
+}
+
+.tree.is-growing .flower-3 {
+    animation-delay: 4.2s;
+}
+
+.tree.is-growing .flower-4 {
+    animation-delay: 4.4s;
+}
+
+.tree.is-growing .flower-5 {
+    animation-delay: 4.6s;
+}
+
+.tree.is-growing .flower-6 {
+    animation-delay: 4.8s;
+}
+
+.tree.is-growing .flower-7 {
+    animation-delay: 5s;
+}
+
+.tree.is-growing .flower-8 {
+    animation-delay: 5.2s;
+}
+
+.tree.is-growing .flower-9 {
+    animation-delay: 5.4s;
+}
+
+.tree.is-growing .flower-10 {
+    animation-delay: 5.6s;
+}
+
+.tree.is-growing .flower-11 {
+    animation-delay: 5.8s;
+}
+
+.tree.is-growing .flower-12 {
+    animation-delay: 6s;
+}
+
+.tree.is-growing .flower-13 {
+    animation-delay: 6.2s;
+}
+
+.tree.is-growing .flower-14 {
+    animation-delay: 6.4s;
+}
+
+.tree.is-growing .flower-15 {
+    animation-delay: 6.6s;
+}
+
+.tree.is-growing .flower-16 {
+    animation-delay: 6.8s;
+}
+
+.tree.is-growing .flower-17 {
+    animation-delay: 7s;
+}
+
+.tree.is-growing .flower-18 {
+    animation-delay: 7.2s;
+}
+
+.tree.is-growing .flower-19 {
+    animation-delay: 7.4s;
+}
+
+.tree.is-growing .flower-20 {
+    animation-delay: 7.6s;
+}
+
+.tree.is-growing .flower-21 {
+    animation-delay: 7.8s;
+}
+
+.tree.is-growing .flower-22 {
+    animation-delay: 8s;
+}
+
+.tree.is-growing .flower-23 {
+    animation-delay: 8.2s;
+}
+
+.tree.is-growing .flower-24 {
+    animation-delay: 8.4s;
+}
+
+
+/* ========================================
+   FLOWER BLOOM ANIMATION
+======================================== */
+
+@keyframes bloomFlower {
+
+    0% {
+        opacity: 0;
+
+        transform: scale(0);
+    }
+
+    60% {
+        opacity: 1;
+
+        transform: scale(1.2);
+    }
+
+    100% {
+        opacity: 1;
+
+        transform: scale(1);
+    }
+
+}
+
+/* ========================================
+   FALLING FLOWERS
+======================================== */
+
+.tree.is-growing .flower.is-falling {
+    animation:
+        fallFlower 3.5s ease-in forwards;
+}
+
+/* ========================================
+   FALLING FLOWER DELAYS
+======================================== */
+
+.flower-3.is-falling {
+    animation-delay: 0s;
+}
+
+.flower-8.is-falling {
+    animation-delay: 0.8s;
+}
+
+.flower-13.is-falling {
+    animation-delay: 1.6s;
+}
+
+.flower-17.is-falling {
+    animation-delay: 2.4s;
+}
+
+.flower-21.is-falling {
+    animation-delay: 3.2s;
+}
+
+.flower-24.is-falling {
+    animation-delay: 4s;
+}
+
+
+/* ========================================
+   FALLING FLOWER ANIMATION
+======================================== */
+
+@keyframes fallFlower {
+
+    0% {
+        opacity: 1;
+
+        transform:
+            translate(0, 0)
+            rotate(0deg)
+            scale(1);
+    }
+
+    25% {
+        opacity: 1;
+
+        transform:
+            translate(-20px, 70px)
+            rotate(90deg)
+            scale(0.95);
+    }
+
+    50% {
+        opacity: 1;
+
+        transform:
+            translate(25px, 150px)
+            rotate(180deg)
+            scale(0.9);
+    }
+
+    75% {
+        opacity: 0.8;
+
+        transform:
+            translate(-15px, 230px)
+            rotate(270deg)
+            scale(0.8);
+    }
+
+    100% {
+        opacity: 0;
+
+        transform:
+            translate(30px, 320px)
+            rotate(360deg)
+            scale(0.7);
+    }
+
+}
+
+/* ========================================
+   COUNTER SECTION
+======================================== */
+
+.counter-section {
+    position: fixed;
+
+    inset: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    pointer-events: none;
+
+    opacity: 0;
+
+    transform: scale(0.95);
+
+    transition:
+        opacity 2s ease,
+        transform 2s ease;
+}
+
+
+/* ========================================
+   COUNTER VISIBLE
+======================================== */
+
+.counter-section.is-visible {
+    opacity: 1;
+
+    transform: scale(1);
+}
+
+
+/* ========================================
+   COUNTER CONTENT
+======================================== */
+
+.counter-content {
+    text-align: center;
+
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+
+    gap: 24px;
+}
+
+
+/* ========================================
+   COUNTER TITLE
+======================================== */
+
+.counter-title {
+    font-size: clamp(
+        1.2rem,
+        3vw,
+        2rem
+    );
+
+    font-weight: 400;
+
+    letter-spacing: 0.05em;
+
+    opacity: 0.9;
+}
+
+
+/* ========================================
+   LOVE COUNTER
+======================================== */
+
+.love-counter {
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 14px;
+}
+
+
+/* ========================================
+   COUNTER UNIT
+======================================== */
+
+.counter-unit {
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    min-width: 70px;
+}
+
+
+.counter-unit span {
+    font-size: clamp(
+        2rem,
+        5vw,
+        4rem
+    );
+
+    line-height: 1;
+
+    font-variant-numeric: tabular-nums;
+}
+
+
+.counter-unit small {
+    margin-top: 8px;
+
+    font-size: 0.75rem;
+
+    letter-spacing: 0.08em;
+
+    opacity: 0.55;
+
+    text-transform: uppercase;
+}
+
+
+/* ========================================
+   SEPARATORS
+======================================== */
+
+.counter-separator {
+    font-size: 2rem;
+
+    opacity: 0.4;
+
+    margin-bottom: 20px;
+}
+
+/* ========================================
+   FINAL MESSAGE
+======================================== */
+
+.final-message {
+    position: fixed;
+
+    left: 0;
+    right: 0;
+
+    bottom: 12%;
+
+    display: flex;
+    justify-content: center;
+
+    pointer-events: none;
+
+    opacity: 0;
+
+    transform: translateY(20px);
+
+    transition:
+        opacity 2s ease,
+        transform 2s ease;
+}
+
+
+/* ========================================
+   FINAL MESSAGE VISIBLE
+======================================== */
+
+.final-message.is-visible {
+    opacity: 1;
+
+    transform: translateY(0);
+}
+
+
+/* ========================================
+   FINAL MESSAGE TEXT
+======================================== */
+
+.final-message p {
+    max-width: 80%;
+
+    text-align: center;
+
+    font-size: clamp(
+        1rem,
+        2.5vw,
+        1.5rem
+    );
+
+    line-height: 1.6;
+
+    letter-spacing: 0.04em;
+
+    opacity: 0.9;
+}
+
+/* ========================================
+   INTRO HINT
+======================================== */
+
+.intro-hint {
+    font-size: 0.9rem;
+    opacity: 0.6;
+    letter-spacing: 0.08em;
+ }
+
